@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090c11">
+  <title>CS2 SkinMarket</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="#" data-tab="home"><span class="brand-mark">CS<span>2</span></span><span class="brand-name">SKIN<span>MARKET</span></span></a>
+    <div class="header-actions">
+      <label class="currency-wrap"><span>ВАЛЮТА</span><select id="currencySelect"><option value="EUR">EUR €</option><option value="USD">USD $</option><option value="RUB">RUB ₽</option></select></label>
+      <button class="balance-pill" data-tab="wallet"><span class="coin">◈</span><strong id="balanceValue">100,00 €</strong><small>＋</small></button>
+      <div class="user-chip"><span class="online-dot"></span><span id="username">PLAYER</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section id="homePage" class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> COUNTER-STRIKE 2 MARKETPLACE</div>
+          <h1>ТВОИ СКИНЫ.<br><span>ТВОИ ПРАВИЛА.</span></h1>
+          <p>Покупай предметы, собирай коллекцию, открывай кейсы и играй в мини-игры на виртуальные кредиты.</p>
+          <div class="hero-actions"><button class="btn btn-primary" data-tab="market">Открыть маркет ↗</button><button class="btn btn-ghost" data-tab="games">Играть</button></div>
+          <div class="hero-note"><span class="pulse-dot"></span> ВИРТУАЛЬНЫЙ CS2 MARKET · DIGITAL ITEMS</div>
+        </div>
+        <div class="hero-visual"><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><div class="hero-glow"></div><div class="hero-gun">✦</div><div class="hero-tag tag-top">CS2 / COLLECTION</div><div class="hero-tag tag-bottom">MARKETPLACE <b>2026</b></div></div>
+      </section>
+      <section class="stats-grid">
+        <article class="stat-card"><span class="stat-icon">◈</span><div><small>ПРЕДМЕТОВ НА МАРКЕТЕ</small><strong id="marketCount">0</strong></div></article>
+        <article class="stat-card"><span class="stat-icon">▣</span><div><small>МОЙ ИНВЕНТАРЬ</small><strong id="inventoryCount">0</strong></div></article>
+        <article class="stat-card"><span class="stat-icon">€</span><div><small>СТОИМОСТЬ ИНВЕНТАРЯ</small><strong id="inventoryValue">0,00 €</strong></div></article>
+        <article class="stat-card"><span class="stat-icon">●</span><div><small>СТАТУС СЕРВЕРА</small><strong class="status-text">ONLINE</strong></div></article>
+      </section>
+      <section class="content-section"><div class="section-heading"><div><div class="eyebrow">FEATURED</div><h2>Популярные предметы</h2></div><button class="text-btn" data-tab="market">Весь маркет →</button></div><div id="featuredGrid" class="skin-grid"></div></section>
+      <section class="promo-grid">
+        <button class="promo-card promo-cases" data-tab="cases"><span class="promo-label">LUCKY DROP</span><strong>ОТКРЫВАЙ<br>КЕЙСЫ</strong><span class="promo-link">Перейти к кейсам ↗</span><span class="promo-symbol">▤</span></button>
+        <button class="promo-card promo-upgrade" data-tab="upgrader"><span class="promo-label">TAKE A RISK</span><strong>УЛУЧШАЙ<br>СВОИ СКИНЫ</strong><span class="promo-link">Запустить апгрейд ↗</span><span class="promo-symbol">⇧</span></button>
+      </section>
+    </section>
+
+    <section id="marketPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">EXPLORE ITEMS</div><h1>Маркет</h1><p>Покупай скины за виртуальные кредиты.</p></div><div class="item-counter"><strong id="marketPageCount">0</strong><span>ПРЕДМЕТОВ</span></div></div>
+      <div class="toolbar"><label class="search-box">⌕ <input id="searchInput" type="search" placeholder="Поиск оружия или скина..."></label><select id="rarityFilter" class="filter-select"><option value="all">Все редкости</option><option value="Covert">Тайное</option><option value="Classified">Засекреченное</option><option value="Restricted">Запрещённое</option><option value="Mil-Spec">Армейское</option></select><select id="sortSelect" class="filter-select"><option value="featured">Сначала популярные</option><option value="low">Сначала дешевле</option><option value="high">Сначала дороже</option></select></div>
+      <div id="marketGrid" class="skin-grid"></div>
+    </section>
+
+    <section id="inventoryPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">YOUR COLLECTION</div><h1>Инвентарь</h1><p>Твои предметы. Нажми на карточку, чтобы выбрать скин для апгрейда.</p></div><div class="item-counter"><strong id="inventoryPageCount">0</strong><span>ПРЕДМЕТОВ</span></div></div>
+      <div id="inventoryGrid" class="skin-grid"></div>
+    </section>
+
+    <section id="casesPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">OPEN YOUR LUCK</div><h1>Кейсы</h1><p>Виртуальные кейсы. Результат случайный, баланс не имеет денежной стоимости.</p></div></div>
+      <div id="casesGrid" class="cases-grid"></div><div id="caseResult" class="result-panel hidden" aria-live="polite"></div>
+    </section>
+
+    <section id="upgraderPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">RISK & REWARD</div><h1>Upgrader</h1><p>Обменивай один предмет на шанс получить более дорогой.</p></div></div>
+      <div class="upgrade-layout"><div class="upgrade-box">
+        <div class="upgrade-label">ШАГ 1 · ТВОЙ ПРЕДМЕТ</div><div id="upgradeSource" class="upgrade-selection empty-selection">Выбери предмет в инвентаре</div>
+        <div class="upgrade-label target-label">ШАГ 2 · ЦЕЛЬ</div><select id="upgradeTarget" class="target-select"><option value="">Выбери целевой скин</option></select>
+        <div class="chance-wrap"><div><span>ШАНС УСПЕХА</span><strong id="upgradeChance">0%</strong></div><div class="chance-track"><span id="chanceBar"></span></div></div>
+        <button id="upgradeButton" class="btn btn-primary btn-wide" disabled>Запустить апгрейд ⇧</button><p class="fine-print">Демо-механика: при неудаче исходный предмет теряется. Только виртуальные предметы.</p>
+      </div><div class="upgrade-info"><div class="upgrade-big-icon">⇧</div><div class="eyebrow">UPGRADE SYSTEM</div><h2>Рискни.<br><span>Получи лучше.</span></h2><p>Выбери предмет из инвентаря и цель дороже него. Чем дороже цель, тем ниже шанс успеха.</p><div class="upgrade-rule"><span>01</span> Выбери предмет в инвентаре</div><div class="upgrade-rule"><span>02</span> Выбери более дорогую цель</div><div class="upgrade-rule"><span>03</span> Запусти попытку</div></div></div>
+    </section>
+
+    <section id="gamesPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">ARCADE ZONE</div><h1>Мини-игры</h1><p>Играй на виртуальные кредиты. Никаких реальных ставок или выплат.</p></div></div>
+      <div class="game-tabs"><button class="game-tab active" data-game="mines">💣 Mines</button><button class="game-tab" data-game="coinflip">🪙 Coinflip</button><button class="game-tab" data-game="roulette">🎡 Roulette</button><button class="game-tab" data-game="crash">🚀 Crash</button></div>
+      <div id="minesGame" class="game-panel">
+        <div class="game-intro"><div><div class="eyebrow">FIND THE GEMS</div><h2>Mines</h2><p>Выбери количество мин, открой безопасные клетки и забери выигрыш до попадания на мину.</p></div><div class="multiplier-box"><small>ТЕКУЩИЙ МНОЖИТЕЛЬ</small><strong id="minesMultiplier">1.00x</strong></div></div>
+        <div class="game-controls"><label>Ставка (вирт.)<input id="minesBet" type="number" min="10" max="10000" value="10"></label><label>Количество мин<select id="minesCount"><option>3</option><option>5</option><option>8</option><option>10</option><option>15</option><option>20</option></select></label><button id="minesStart" class="btn btn-primary">Начать игру</button><button id="minesCashout" class="btn btn-ghost" disabled>Забрать выигрыш</button></div>
+        <div id="minesGrid" class="mines-grid"></div><div id="minesStatus" class="game-status">Выставь ставку и начни игру.</div>
+      </div>
+      <div id="coinflipGame" class="game-panel hidden">
+        <div class="game-intro"><div><div class="eyebrow">HEADS OR TAILS</div><h2>Coinflip</h2><p>Угадай сторону монеты. Правильный ответ приносит виртуальный выигрыш 1.9x от ставки.</p></div><div class="multiplier-box"><small>ВЫПЛАТА</small><strong>1.90x</strong></div></div>
+        <div class="game-controls"><label>Ставка (вирт.)<input id="coinBet" type="number" min="10" value="10"></label><label>Твоя сторона<select id="coinChoice"><option value="heads">Орёл</option><option value="tails">Решка</option></select></label><button id="coinPlay" class="btn btn-primary">Подбросить монету</button></div><div id="coinResult" class="game-result">🪙</div><div id="coinStatus" class="game-status">Сделай выбор и нажми кнопку.</div>
+      </div>
+      <div id="rouletteGame" class="game-panel hidden">
+        <div class="game-intro"><div><div class="eyebrow">RED · BLACK · GREEN</div><h2>Roulette</h2><p>Выбери цвет. Красное/чёрное — 2x, зелёное — 14x. Упрощённая демо-рулетка.</p></div><div class="multiplier-box"><small>МНОЖИТЕЛИ</small><strong>2x / 14x</strong></div></div>
+        <div class="game-controls"><label>Ставка (вирт.)<input id="rouletteBet" type="number" min="10" value="10"></label><label>Цвет<select id="rouletteChoice"><option value="red">Красное</option><option value="black">Чёрное</option><option value="green">Зелёное</option></select></label><button id="roulettePlay" class="btn btn-primary">Крутить</button></div><div id="rouletteResult" class="game-result">🎡</div><div id="rouletteStatus" class="game-status">Выбери цвет и запусти рулетку.</div>
+      </div>
+      <div id="crashGame" class="game-panel hidden">
+        <div class="game-intro"><div><div class="eyebrow">CASH OUT IN TIME</div><h2>Crash</h2><p>Запусти раунд и забери выигрыш до случайного краша. Множитель растёт автоматически, пока раунд активен.</p></div><div class="multiplier-box"><small>МНОЖИТЕЛЬ</small><strong id="crashMultiplier">1.00x</strong></div></div>
+        <div class="game-controls"><label>Ставка (вирт.)<input id="crashBet" type="number" min="10" value="10"></label><button id="crashStart" class="btn btn-primary">Запустить раунд</button><button id="crashCashout" class="btn btn-ghost" disabled>Забрать</button></div><div class="crash-stage"><div id="crashRocket">🚀</div><div id="crashGraph">1.00x</div></div><div id="crashStatus" class="game-status">Готов к запуску.</div>
+      </div>
+    </section>
+
+    <section id="walletPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">PLAYER WALLET</div><h1>Баланс</h1><p>Виртуальный игровой баланс и ежедневные бесплатные кредиты.</p></div></div>
+      <div class="wallet-layout"><div class="wallet-card"><div class="eyebrow">ТВОЙ БАЛАНС</div><strong id="walletBalance">100,00 €</strong><p>Виртуальные кредиты · не имеют денежной стоимости</p><div class="wallet-actions"><button class="btn btn-primary" id="dailyBonus">Получить ежедневный бонус +50</button><button class="btn btn-ghost" data-tab="premium">Открыть Premium ✦</button></div></div><div class="wallet-card"><div class="eyebrow">ИСТОРИЯ ОПЕРАЦИЙ</div><div id="transactionList" class="transaction-list"></div></div></div>
+    </section>
+
+
+    <section id="premiumPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">EXCLUSIVE MEMBERSHIP</div><h1>Premium <span class="premium-title-star">✦</span></h1><p>Дополнительные возможности и уникальный стиль профиля.</p></div></div>
+      <div class="premium-layout"><div class="premium-card"><div class="premium-card-top"><span class="premium-crown">✦</span><span class="premium-label">CS2 MARKET / VIP</span></div><h2>PREMIUM PASS</h2><p>30 дней премиум-доступа</p><div class="premium-price">100 <small>⭐ Stars</small></div><ul class="premium-benefits"><li>Золотой значок Premium в профиле</li><li>Эксклюзивная рамка профиля</li><li>Расширенная статистика аккаунта</li><li>Доступ к Premium-оформлению</li></ul><button id="buyPremium" class="btn btn-primary btn-wide">Купить за 100 ⭐</button><small class="premium-note">Оплата откроется внутри Telegram. Доступ активируется только после подтверждения оплаты.</small></div><div class="premium-side"><div class="eyebrow">MEMBERSHIP STATUS</div><h2 id="premiumStatus">Обычный аккаунт</h2><p id="premiumExpiry">Активного Premium пока нет.</p><div class="premium-side-icon">♛</div><div class="upgrade-rule"><span>01</span> Покупка фиксированного цифрового доступа</div><div class="upgrade-rule"><span>02</span> Автоматическая активация после оплаты</div><div class="upgrade-rule"><span>03</span> Управление стилем в профиле</div></div></div>
+    </section>
+
+    <section id="profilePage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">ACCOUNT OVERVIEW</div><h1>Профиль</h1><p>Твоя статистика в CS2 SkinMarket.</p></div></div>
+      <div class="profile-card"><div class="profile-avatar" id="profileAvatar">P</div><div class="profile-main"><div class="eyebrow">PLAYER ACCOUNT <span id="premiumBadge" class="vip-badge hidden">✦ PREMIUM</span></div><h2 id="profileName">PLAYER</h2><p id="profileStatus">Обычный аккаунт</p></div><div class="profile-balance"><small>ТЕКУЩИЙ БАЛАНС</small><strong id="profileBalance">0,00 €</strong></div></div>
+      <div class="profile-stats"><div><small>ПРЕДМЕТОВ В ИНВЕНТАРЕ</small><strong id="profileItems">0</strong></div><div><small>СТОИМОСТЬ КОЛЛЕКЦИИ</small><strong id="profileValue">0,00 €</strong></div><div><small>ВАЛЮТА</small><strong id="profileCurrency">EUR</strong></div></div>
+      <div class="profile-customize"><div class="section-heading"><div><div class="eyebrow">PERSONAL STYLE</div><h2>Оформление профиля</h2></div></div><div id="cosmeticGrid" class="cosmetic-grid"></div></div><button class="btn btn-primary" data-tab="premium">Улучшить до Premium ✦</button>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="home"><span>⌂</span>Главная</button><button class="nav-btn" data-tab="market"><span>◈</span>Маркет</button><button class="nav-btn" data-tab="inventory"><span>▣</span>Инвентарь</button><button class="nav-btn" data-tab="cases"><span>▤</span>Кейсы</button><button class="nav-btn" data-tab="upgrader"><span>⇧</span>Upgrader</button><button class="nav-btn" data-tab="games"><span>🎮</span>Игры</button><button class="nav-btn" data-tab="wallet"><span>◉</span>Баланс</button><button class="nav-btn" data-tab="premium"><span>✦</span>Premium</button><button class="nav-btn" data-tab="profile"><span>♙</span>Профиль</button>
+  </nav>
+  <div id="toast" class="toast" role="status"></div>
+  <footer class="footer"><span>CS2 SKINMARKET</span><span>FAN-MADE VIRTUAL PROJECT · NOT AFFILIATED WITH VALVE</span></footer>
+</div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="./config.js"></script>
+<script src="./app.js"></script>
+</body></html>
