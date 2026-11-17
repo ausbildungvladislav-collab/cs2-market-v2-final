@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: cs2-market
+    runtime: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: BOT_TOKEN
+        sync: false
+      - key: ADMIN_TELEGRAM_IDS
+        sync: false
+      - key: TELEGRAM_WEBHOOK_URL
+        sync: false
+      - key: TELEGRAM_WEBHOOK_SECRET
+        sync: false
+      - key: GITHUB_BACKUP_REPO
+        sync: false
+      - key: GITHUB_BACKUP_TOKEN
+        sync: false
+      - key: GITHUB_BACKUP_BRANCH
+        value: main
+      - key: DATABASE_FILE
+        value: /tmp/cs2-market.sqlite
