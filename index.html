@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4f8fc">
+  <title>CS2 Market V2 — Virtual Skin Hub</title>
+  <link rel="stylesheet" href="./style.css?v=16">
+</head>
+<body class="reface-v2">
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="#" data-tab="home"><span class="brand-mark">CS<span>2</span></span><span class="brand-name">SKIN<span>MARKET</span></span><span class="brand-version">V2</span></a>
+    <div class="header-actions">
+      <label class="currency-wrap"><span>ВАЛЮТА</span><select id="currencySelect"><option value="EUR">EUR €</option><option value="USD">USD $</option><option value="RUB">RUB ₽</option></select></label>
+      <button class="balance-pill" data-tab="wallet"><span class="coin">◈</span><strong id="balanceValue">100,00 €</strong><small>＋</small></button>
+      <div class="user-chip"><span class="online-dot"></span><span id="username">PLAYER</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section id="homePage" class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> COUNTER-STRIKE 2 MARKETPLACE</div>
+          <h1>ТВОИ СКИНЫ.<br><span>ТВОИ ПРАВИЛА.</span></h1>
+          <p>Покупай предметы, собирай коллекцию, открывай кейсы и играй в мини-игры на виртуальные кредиты.</p>
+          <div class="hero-actions"><button class="btn btn-primary" data-tab="market">Открыть маркет ↗</button><button class="btn btn-ghost" data-tab="games">Играть</button></div>
+          <div class="hero-note"><span class="pulse-dot"></span> ВИРТУАЛЬНЫЙ CS2 MARKET · DIGITAL ITEMS</div>
+        </div>
+        <div class="hero-visual"><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><div class="hero-glow"></div><div class="hero-gun">✦</div><div class="hero-tag tag-top">CS2 / COLLECTION</div><div class="hero-tag tag-bottom">MARKETPLACE <b>2026</b></div></div>
+      </section>
+      <section class="stats-grid">
+        <article class="stat-card"><span class="stat-icon">◈</span><div><small>ПРЕДМЕТОВ НА МАРКЕТЕ</small><strong id="marketCount">0</strong></div></article>
+        <article class="stat-card"><span class="stat-icon">▣</span><div><small>МОЙ ИНВЕНТАРЬ</small><strong id="inventoryCount">0</strong></div></article>
+        <article class="stat-card"><span class="stat-icon">€</span><div><small>СТОИМОСТЬ ИНВЕНТАРЯ</small><strong id="inventoryValue">0,00 €</strong></div></article>
+        <article class="stat-card"><span class="stat-icon">●</span><div><small>СТАТУС СЕРВЕРА</small><strong class="status-text">ONLINE</strong></div></article>
+      </section>
+      <section class="content-section"><div class="section-heading"><div><div class="eyebrow">FEATURED</div><h2>Популярные предметы</h2></div><button class="text-btn" data-tab="market">Весь маркет →</button></div><div id="featuredGrid" class="skin-grid"></div></section>
+      <section class="promo-grid">
+        <button class="promo-card promo-cases" data-tab="cases"><span class="promo-label">LUCKY DROP</span><strong>ОТКРЫВАЙ<br>КЕЙСЫ</strong><span class="promo-link">Перейти к кейсам ↗</span><span class="promo-symbol">▤</span></button>
+        <button class="promo-card promo-upgrade" data-tab="upgrader"><span class="promo-label">TAKE A RISK</span><strong>УЛУЧШАЙ<br>СВОИ СКИНЫ</strong><span class="promo-link">Запустить апгрейд ↗</span><span class="promo-symbol">⇧</span></button>
+      </section>
+    </section>
+
+    <section id="marketPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">EXPLORE ITEMS</div><h1>Маркет</h1><p>Цены — реальные минимальные лоты Skinport в EUR. Покупки в проекте идут за виртуальные кредиты.</p><small id="marketPriceStatus" class="market-price-status">Подключение к каталогу цен...</small></div><div class="item-counter"><strong id="marketPageCount">0</strong><span>ПРЕДМЕТОВ</span></div></div>
+      <div class="toolbar"><label class="search-box">⌕ <input id="searchInput" type="search" placeholder="Поиск оружия или скина..."></label><select id="rarityFilter" class="filter-select"><option value="all">Все редкости</option><option value="Covert">Тайное</option><option value="Classified">Засекреченное</option><option value="Restricted">Запрещённое</option><option value="Mil-Spec">Армейское</option></select><select id="sortSelect" class="filter-select"><option value="featured">Сначала популярные</option><option value="low">Сначала дешевле</option><option value="high">Сначала дороже</option></select></div>
+      <div id="marketGrid" class="skin-grid"></div><button id="marketLoadMore" class="btn btn-ghost market-load-more hidden" type="button">Показать ещё</button>
+    </section>
+
+    <section id="inventoryPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">YOUR COLLECTION</div><h1>Инвентарь</h1><p>Твои предметы. Нажми на карточку, чтобы выбрать скин для апгрейда.</p></div><div class="item-counter"><strong id="inventoryPageCount">0</strong><span>ПРЕДМЕТОВ</span></div></div>
+      <div id="inventoryGrid" class="skin-grid"></div>
+    </section>
+
+    <section id="casesPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">OPEN YOUR LUCK</div><h1>Кейсы</h1><p>Виртуальные кейсы. Результат случайный, баланс не имеет денежной стоимости.</p></div></div>
+      <div id="casesGrid" class="cases-grid"></div><div id="caseResult" class="result-panel hidden" aria-live="polite"></div>
+    </section>
+
+    <section id="upgraderPage" class="page hidden">
+  <div class="page-heading upgrade-page-heading"><div><div class="eyebrow">CS2 ITEM LAB · UPGRADE ENGINE</div><h1>Upgrader</h1><p>Выбери предмет из инвентаря и цель дороже. Шанс и результат проверяются сервером.</p></div><div id="upgradeEngineStatus" class="upgrade-live-tag"><span class="online-dot"></span> ONLINE ENGINE</div></div>
+  <div class="upgrade-layout upgrade-layout-v3">
+    <section class="upgrade-info upgrade-engine-box">
+      <div class="upgrade-engine-top"><div><div class="eyebrow">АПГРЕЙД СКИНОВ</div><h2>Твой шанс</h2><p>Чем дороже цель относительно исходного предмета, тем ниже шанс.</p></div><div class="upgrade-engine-badge">CS2<br><b>LAB</b></div></div>
+      <div class="upgrade-gauge-wrap"><div class="upgrade-gauge" id="upgradeGauge" role="meter" aria-label="Шанс успешного апгрейда" aria-valuemin="0" aria-valuemax="90" aria-valuenow="0"><span class="upgrade-gauge-pointer" id="upgradeGaugePointer" aria-hidden="true"></span><div class="upgrade-gauge-core"><strong id="upgradeChance">0.00%</strong><span id="upgradeChanceLabel">ВЫБЕРИ СКИНЫ</span></div></div><div class="upgrade-gauge-scale"><span>0%</span><span>50%</span><span>90%</span></div></div>
+      <div class="upgrade-item-pair">
+        <article class="upgrade-item-card"><span class="upgrade-item-kicker">ТВОЙ СКИН</span><div class="upgrade-compare-image" id="upgradeWheelSource">Выбери скин</div><strong id="upgradeSourceName">Исходный предмет</strong><small id="upgradeSourcePrice">—</small></article>
+        <span class="upgrade-item-arrow" aria-hidden="true">➜</span>
+        <article class="upgrade-item-card upgrade-item-target"><span class="upgrade-item-kicker">ЦЕЛЬ АПГРЕЙДА</span><div class="upgrade-compare-image" id="upgradeWheelTarget">Выбери цель</div><strong id="upgradeTargetName">Целевой предмет</strong><small id="upgradeTargetPrice">—</small></article>
+      </div>
+      <div id="upgradeWheelResult" class="upgrade-stage-status" aria-live="polite">Сначала выбери исходный и целевой скины.</div>
+      <button id="upgradeButton" class="btn btn-primary btn-wide upgrade-launch" disabled><span>Прокачать</span><b>⌃</b></button>
+      <div class="upgrade-warning"><span>ⓘ</span><p>Это виртуальная механика. При неудаче исходный предмет списывается. Реальных денег и скинов нет.</p></div>
+    </section>
+    <section class="upgrade-box upgrade-config-box">
+      <div class="upgrade-box-heading"><div><div class="eyebrow">ВЫБОР ПРЕДМЕТОВ</div><h2>Собери апгрейд</h2></div><span class="upgrade-box-icon">⇧</span></div>
+      <div class="upgrade-label">ИСХОДНЫЙ ПРЕДМЕТ</div><div id="upgradeSource" class="upgrade-selection empty-selection">Выбери предмет из инвентаря ниже.</div>
+      <div class="upgrade-label target-label">МОЙ ИНВЕНТАРЬ</div><div id="upgradeInventoryPicker" class="upgrade-inventory-picker"></div>
+      <div class="upgrade-divider"></div>
+      <div class="upgrade-target-heading"><div><div class="upgrade-label">ЦЕЛЕВОЙ ПРЕДМЕТ</div><small>Показываем только доступные скины дороже исходного</small></div><span class="upgrade-target-count" id="upgradeTargetCount">0 целей</span></div>
+      <div class="upgrade-target-tools"><label class="search-box">⌕ <input id="upgradeTargetSearch" type="search" placeholder="Найти скин или оружие..." autocomplete="off"></label><select id="upgradeTargetSort" class="filter-select" aria-label="Сортировка целей"><option value="low">Сначала дешевле</option><option value="high">Сначала дороже</option></select></div>
+      <div id="upgradeTargetPicker" class="upgrade-target-picker"><div class="empty-state">Сначала выбери исходный предмет.</div></div><button id="upgradeTargetMore" class="btn btn-ghost target-more-btn hidden" type="button">Показать ещё</button>
+      <select id="upgradeTarget" class="target-select upgrade-native-select" aria-hidden="true" tabindex="-1"><option value="">Выбери целевой скин</option></select>
+    </section>
+  </div>
+</section>
+<section id="gamesPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">ARCADE ZONE</div><h1>Мини-игры</h1><p>Играй на виртуальные кредиты. Никаких реальных ставок или выплат.</p></div></div>
+      <div class="game-tabs"><button class="game-tab active" data-game="mines">💣 Mines</button><button class="game-tab" data-game="coinflip">🪙 Coinflip</button><button class="game-tab" data-game="roulette">🎡 Roulette</button><button class="game-tab" data-game="crash">🚀 Crash</button></div>
+      <div id="minesGame" class="game-panel">
+        <div class="game-intro"><div><div class="eyebrow">FIND THE GEMS</div><h2>Mines</h2><p>Выбери количество мин, открой безопасные клетки и забери выигрыш до попадания на мину.</p></div><div class="multiplier-box"><small>ТЕКУЩИЙ МНОЖИТЕЛЬ</small><strong id="minesMultiplier">1.00x</strong></div></div>
+        <div class="game-controls"><label>Ставка (вирт.)<input id="minesBet" type="number" min="10" max="10000" value="10"></label><label>Количество мин<select id="minesCount"><option>3</option><option>5</option><option>8</option><option>10</option><option>15</option><option>20</option></select></label><button id="minesStart" class="btn btn-primary">Начать игру</button><button id="minesCashout" class="btn btn-ghost" disabled>Забрать выигрыш</button></div>
+        <div id="minesGrid" class="mines-grid"></div><div id="minesStatus" class="game-status">Выставь ставку и начни игру.</div>
+      </div>
+      <div id="coinflipGame" class="game-panel hidden">
+        <div class="game-intro"><div><div class="eyebrow">HEADS OR TAILS</div><h2>Coinflip</h2><p>Угадай сторону монеты. Правильный ответ приносит виртуальный выигрыш 1.9x от ставки.</p></div><div class="multiplier-box"><small>ВЫПЛАТА</small><strong>1.90x</strong></div></div>
+        <div class="game-controls"><label>Ставка (вирт.)<input id="coinBet" type="number" min="10" value="10"></label><label>Твоя сторона<select id="coinChoice"><option value="heads">Орёл</option><option value="tails">Решка</option></select></label><button id="coinPlay" class="btn btn-primary">Подбросить монету</button></div><div id="coinResult" class="game-result"><div id="coinVisual" class="coin-visual"><span id="coinFace">🪙</span></div></div><div id="coinStatus" class="game-status">Сделай выбор и нажми кнопку.</div>
+      </div>
+      <div id="rouletteGame" class="game-panel hidden">
+        <div class="game-intro"><div><div class="eyebrow">RED · BLACK · GREEN</div><h2>Roulette</h2><p>Выбери цвет. Красное/чёрное — 2x, зелёное — 14x. Упрощённая демо-рулетка.</p></div><div class="multiplier-box"><small>МНОЖИТЕЛИ</small><strong>2x / 14x</strong></div></div>
+        <div class="game-controls"><label>Ставка (вирт.)<input id="rouletteBet" type="number" min="10" value="10"></label><label>Цвет<select id="rouletteChoice"><option value="red">Красное</option><option value="black">Чёрное</option><option value="green">Зелёное</option></select></label><button id="roulettePlay" class="btn btn-primary">Крутить</button></div><div class="roulette-machine"><div class="roulette-pointer">▼</div><div id="rouletteWindow" class="roulette-window"><div id="rouletteTrack" class="roulette-track"><div class="roulette-cell red">♦</div><div class="roulette-cell black">♠</div><div class="roulette-cell green">★</div></div></div></div><div id="rouletteResult" class="game-result">🎡</div><div id="rouletteStatus" class="game-status">Выбери цвет и запусти рулетку.</div>
+      </div>
+      <div id="crashGame" class="game-panel hidden">
+        <div class="game-intro"><div><div class="eyebrow">CASH OUT IN TIME</div><h2>Crash</h2><p>Запусти раунд и забери выигрыш до случайного краша. Множитель растёт автоматически, пока раунд активен.</p></div><div class="multiplier-box"><small>МНОЖИТЕЛЬ</small><strong id="crashMultiplier">1.00x</strong></div></div>
+        <div class="game-controls"><label>Ставка (вирт.)<input id="crashBet" type="number" min="10" value="10"></label><button id="crashStart" class="btn btn-primary">Запустить раунд</button><button id="crashCashout" class="btn btn-ghost" disabled>Забрать</button></div><div class="crash-stage"><div id="crashRocket">🚀</div><div id="crashGraph">1.00x</div></div><div id="crashStatus" class="game-status">Готов к запуску.</div>
+      </div>
+    </section>
+
+    <section id="walletPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">PLAYER WALLET</div><h1>Баланс</h1><p>Виртуальный игровой баланс и ежедневные бесплатные кредиты.</p></div></div>
+      <div class="wallet-layout"><div class="wallet-card"><div class="eyebrow">ТВОЙ БАЛАНС</div><strong id="walletBalance">100,00 €</strong><p>Виртуальные кредиты · не имеют денежной стоимости</p><div class="wallet-actions"><button class="btn btn-primary" id="dailyBonus">Получить ежедневный бонус +50</button><button class="btn btn-ghost" data-tab="premium">Открыть Premium ✦</button></div><div class="donate-panel"><div><strong>Поддержать проект</strong><p>Добровольный донат через Telegram Stars. Не увеличивает игровой баланс.</p></div><label for="donationStars">Сумма<select id="donationStars"><option value="50">50 ⭐</option><option value="100">100 ⭐</option><option value="250">250 ⭐</option><option value="500">500 ⭐</option></select></label><button class="btn btn-donate" id="donateButton" type="button">Отправить донат в Stars ↗</button></div></div><div class="wallet-card"><div class="eyebrow">ИСТОРИЯ ОПЕРАЦИЙ</div><div id="transactionList" class="transaction-list"></div></div></div>
+    </section>
+
+
+    <section id="premiumPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">EXCLUSIVE MEMBERSHIP</div><h1>Premium <span class="premium-title-star">✦</span></h1><p>Дополнительные возможности и уникальный стиль профиля.</p></div></div>
+      <div class="premium-layout"><div class="premium-card"><div class="premium-card-top"><span class="premium-crown">✦</span><span class="premium-label">CS2 MARKET / VIP</span></div><h2>PREMIUM PASS</h2><p>30 дней премиум-доступа</p><div class="premium-price">100 <small>⭐ Stars</small></div><ul class="premium-benefits"><li>Золотой значок Premium в профиле</li><li>Эксклюзивная рамка профиля</li><li>Расширенная статистика аккаунта</li><li>Доступ к Premium-оформлению</li></ul><button id="buyPremium" class="btn btn-primary btn-wide">Написать мне по поводу оплаты</button><small class="premium-note">Для оплаты напишите мне в личные сообщения Telegram. После подтверждения оплаты я включу Premium.</small></div><div class="premium-side"><div class="eyebrow">MEMBERSHIP STATUS</div><h2 id="premiumStatus">Обычный аккаунт</h2><p id="premiumExpiry">Активного Premium пока нет.</p><div class="premium-side-icon">♛</div><div class="upgrade-rule"><span>01</span> Покупка фиксированного цифрового доступа</div><div class="upgrade-rule"><span>02</span> Активация после подтверждения оплаты владельцем</div><div class="upgrade-rule"><span>03</span> Управление стилем в профиле</div></div></div>
+    </section>
+
+    <section id="profilePage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">ACCOUNT OVERVIEW</div><h1>Профиль</h1><p>Твоя статистика в CS2 SkinMarket.</p></div></div>
+      <div class="profile-card"><div class="profile-avatar" id="profileAvatar">P</div><div class="profile-main"><div class="eyebrow">PLAYER ACCOUNT <span id="premiumBadge" class="vip-badge hidden">✦ PREMIUM</span></div><h2 id="profileName">PLAYER</h2><p id="profileStatus">Обычный аккаунт</p></div><div class="profile-balance"><small>ТЕКУЩИЙ БАЛАНС</small><strong id="profileBalance">0,00 €</strong></div></div>
+      <div class="profile-stats"><div><small>ПРЕДМЕТОВ В ИНВЕНТАРЕ</small><strong id="profileItems">0</strong></div><div><small>СТОИМОСТЬ КОЛЛЕКЦИИ</small><strong id="profileValue">0,00 €</strong></div><div><small>ВАЛЮТА</small><strong id="profileCurrency">EUR</strong></div></div>
+      <div class="profile-customize"><div class="section-heading"><div><div class="eyebrow">PERSONAL STYLE</div><h2>Оформление профиля</h2></div></div><div id="cosmeticGrid" class="cosmetic-grid"></div></div><button class="btn btn-primary" data-tab="premium">Улучшить до Premium ✦</button>
+    </section>
+
+    <section id="multiplayerPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">LIVE PLAYER NETWORK</div><h1>Multiplayer</h1><p>Ищи друзей, создавай игровые комнаты и синхронизируй раунды онлайн.</p></div><div id="mpConnection" class="admin-status-pill">● CONNECTING</div></div>
+      <div id="mpNotice" class="mp-notice hidden"></div>
+      <div class="mp-layout">
+        <section class="mp-card"><div class="admin-section-title"><div><div class="eyebrow">PLAYERS</div><h2>Найти игрока</h2></div></div><div class="mp-search-row"><input id="mpSearchInput" placeholder="Telegram ID или username"><button id="mpSearchButton" class="btn btn-primary">Найти</button></div><div id="mpSearchResults" class="mp-list"></div><div class="admin-section-title"><div><div class="eyebrow">SOCIAL</div><h2>Друзья</h2></div></div><div id="mpFriends" class="mp-list"></div><div class="admin-section-title"><div><div class="eyebrow">INVITATIONS</div><h2>Приглашения</h2></div></div><div id="mpInvites" class="mp-list"></div></section>
+        <section class="mp-card"><div class="admin-section-title"><div><div class="eyebrow">ROOMS</div><h2>Создать комнату</h2></div></div><form id="mpCreateRoom" class="mp-create-form"><label>Игра<select id="mpGameType"><option value="mines">Mines</option><option value="coinflip">Coinflip</option><option value="roulette">Roulette</option><option value="crash">Crash</option></select></label><label>Доступ<select id="mpVisibility"><option value="public">Публичная</option><option value="private">Приватная</option></select></label><label>Игроков<select id="mpMaxPlayers"><option>2</option><option selected>4</option><option>6</option><option>8</option></select></label><button class="btn btn-primary" type="submit">＋ Создать комнату</button></form><div class="mp-search-row mp-join-row"><input id="mpJoinCode" maxlength="12" placeholder="Код комнаты"><button id="mpJoinButton" class="btn btn-ghost">Подключиться</button></div><div class="admin-section-title"><div><div class="eyebrow">PUBLIC LOBBY</div><h2>Активные комнаты</h2></div><button id="mpRefreshRooms" class="text-btn">Обновить</button></div><div id="mpRooms" class="mp-list"></div></section>
+      </div>
+      <section id="mpActiveRoom" class="mp-card mp-active-room hidden"><div class="mp-room-heading"><div><div class="eyebrow">ROOM · <span id="mpRoomCode"></span></div><h2 id="mpRoomTitle">Комната</h2><p id="mpRoomStatus"></p></div><button id="mpLeaveRoom" class="btn btn-ghost">Выйти</button></div><div class="mp-room-grid"><div><div class="admin-section-title"><h3>Участники</h3></div><div id="mpRoomMembers" class="mp-list"></div><div class="mp-invite-row"><select id="mpInviteFriend"></select><button id="mpInviteButton" class="mini-btn">Пригласить</button></div><div class="admin-section-title"><h3>Состояние игры</h3></div><textarea id="mpStateInput" rows="4" placeholder='{"round":1,"state":"ready"}'></textarea><button id="mpSendState" class="mini-btn">Синхронизировать состояние</button><div id="mpRoundHistory" class="mp-round-history"></div></div><div><div class="admin-section-title"><h3>Чат комнаты</h3></div><div id="mpChatMessages" class="mp-chat-messages"></div><form id="mpChatForm" class="mp-chat-form"><input id="mpChatInput" maxlength="500" placeholder="Сообщение"><button class="btn btn-primary" type="submit">Отправить</button></form></div></div></section>
+    </section>
+
+    <section id="adminPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">RESTRICTED CONTROL CENTER</div><h1>Admin Dashboard</h1><p>Статистика и управление аккаунтами из базы данных.</p></div><div id="adminApiStatus" class="admin-status-pill">● CHECKING</div></div>
+      <div class="admin-tabs"><button class="admin-tab active" data-admin-view="overview">Обзор</button><button class="admin-tab" data-admin-view="players">Игроки</button><button class="admin-tab" data-admin-view="logs">Журнал действий</button></div>
+      <section id="adminOverviewView"><div id="adminStats" class="admin-stats-grid"></div><div class="admin-overview-grid"><article class="admin-card"><div class="admin-section-title"><div><div class="eyebrow">SYSTEM</div><h2>Состояние сервера</h2></div></div><div id="adminSystemStatus" class="admin-system-status"></div></article><article class="admin-card"><div class="admin-section-title"><div><div class="eyebrow">LATEST EVENTS</div><h2>Последние события</h2></div></div><div id="adminRecentEvents" class="admin-event-list"></div></article></div></section>
+      <section id="adminPlayersView" class="hidden"><div class="admin-card"><div class="admin-section-title"><div><div class="eyebrow">PLAYER DIRECTORY</div><h2>Управление игроками</h2></div><span id="adminPlayerCount" class="admin-muted"></span></div><div class="admin-toolbar"><input id="adminPlayerSearch" placeholder="Telegram ID или username"><select id="adminPlayerFilter"><option value="all">Все статусы</option><option value="active">Активные</option><option value="blocked">Заблокированные</option></select><select id="adminPlayerSort"><option value="created_at">Регистрация</option><option value="last_active">Активность</option><option value="balance">Баланс</option><option value="username">Username</option></select><select id="adminPlayerDirection"><option value="desc">Сначала новые</option><option value="asc">Сначала старые</option></select><button id="adminPlayerSearchButton" class="btn btn-primary">Найти</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Игрок</th><th>Telegram ID</th><th>Баланс</th><th>Регистрация</th><th>Активность</th><th>Статус</th></tr></thead><tbody id="adminPlayersTable"></tbody></table></div></div><article id="adminPlayerDetail" class="admin-card admin-player-detail hidden"></article></section>
+      <section id="adminLogsView" class="admin-card hidden"><div class="admin-section-title"><div><div class="eyebrow">AUDIT TRAIL</div><h2>Журнал административных действий</h2></div></div><div class="admin-toolbar"><input id="adminLogSearch" placeholder="Поиск по администратору, игроку или причине"><button id="adminLogSearchButton" class="btn btn-primary">Найти</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Дата</th><th>Администратор</th><th>Игрок</th><th>Действие</th><th>Было → стало</th><th>Причина</th></tr></thead><tbody id="adminLogsTable"></tbody></table></div></section>
+    </section>
+
+    <section id="developerPage" class="page hidden">
+      <div class="page-heading"><div><div class="eyebrow">PRIVATE CONTROL CENTER</div><h1>Панель разработчика</h1><p>Локальное управление демонстрационным аккаунтом и виртуальными предметами.</p></div><div class="item-counter"><strong>DEV</strong><span>LOCAL MODE</span></div></div>
+      <div id="developerLogin" class="developer-card">
+        <div class="eyebrow">AUTHENTICATION REQUIRED</div><h2>Вход разработчика</h2><p>Введите пароль, чтобы открыть панель управления.</p>
+        <form id="developerLoginForm" class="developer-login-form"><input id="developerPassword" type="password" autocomplete="current-password" placeholder="Пароль разработчика" required><button class="btn btn-primary" type="submit">Войти в панель</button></form>
+        <div id="developerLoginError" class="developer-error hidden">Неверный пароль.</div>
+      </div>
+      <div id="developerDashboard" class="hidden">
+        <div class="developer-stats"><article class="developer-stat"><small>БАЛАНС ИГРОКА</small><strong id="devBalance">0</strong></article><article class="developer-stat"><small>ПРЕДМЕТОВ В ИНВЕНТАРЕ</small><strong id="devInventory">0</strong></article><article class="developer-stat"><small>ОПЕРАЦИЙ</small><strong id="devTransactions">0</strong></article></div>
+        <div class="developer-grid">
+          <div class="developer-card"><div class="eyebrow">VIRTUAL CREDITS</div><h2>Управление балансом</h2><label class="developer-field">Сумма<input id="devAmount" type="number" min="0.01" step="0.01" value="100"></label><div class="developer-actions"><button id="devAddBalance" class="btn btn-primary">＋ Начислить</button><button id="devRemoveBalance" class="btn btn-danger">－ Списать</button></div></div>
+          <div class="developer-card"><div class="eyebrow">INVENTORY CONTROL</div><h2>Добавить скин</h2><label class="developer-field">Предмет<select id="devSkinSelect"></select></label><button id="devAddSkin" class="btn btn-primary">Добавить в инвентарь</button></div>
+        </div>
+        <div class="developer-card developer-bottom"><div><div class="eyebrow">SESSION</div><h2>Доступ разработчика активен</h2><p>Изменения сохраняются в локальном хранилище этого браузера.</p></div><button id="devLogout" class="btn btn-ghost">Выйти</button></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="home"><span>⌂</span>Главная</button><button class="nav-btn" data-tab="market"><span>◈</span>Маркет</button><button class="nav-btn" data-tab="inventory"><span>▣</span>Инвентарь</button><button class="nav-btn" data-tab="cases"><span>▤</span>Кейсы</button><button class="nav-btn" data-tab="upgrader"><span>⇧</span>Upgrader</button><button class="nav-btn" data-tab="games"><span>🎮</span>Игры</button><button class="nav-btn" data-tab="multiplayer"><span>⚔</span>Multiplayer</button><button class="nav-btn" data-tab="wallet"><span>◉</span>Баланс</button><button class="nav-btn" data-tab="premium"><span>✦</span>Premium</button><button class="nav-btn" data-tab="profile"><span>♙</span>Профиль</button><button class="nav-btn nav-btn-admin hidden" data-tab="admin" hidden aria-label="Admin Dashboard"><span>🛡</span>ADMIN</button>
+  </nav>
+  <div id="toast" class="toast" role="status"></div>
+  <footer class="footer"><span>CS2 SKINMARKET <small id="appVersion" class="app-version">ВЕРСИЯ JS 17 · CSS 12</small></span><span>FAN-MADE VIRTUAL PROJECT · NOT AFFILIATED WITH VALVE</span></footer>
+</div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="./config.js?v=6"></script>
+<script src="./app.js?v=22"></script>
+</body></html>
+
